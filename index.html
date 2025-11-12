@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✅ Tarefas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="favicon.svg">
+    <link rel="mask-icon" href="favicon.svg" color="#000000">
+    <!-- O link `rel="mask-icon"` é usado para definir um ícone que pode ser usado por navegadores que suportam ícones de máscara, como o Safari no macOS e iOS. Ele permite que o ícone seja exibido com uma cor personalizada, geralmente definida pelo atributo `color`. Isso é útil para criar um ícone que se adapta ao tema do sistema ou do navegador, proporcionando uma melhor integração visual. -->
+
+</head>
+<body>
+    <div class="noise-overlay"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-line"></div>
+                <span class="logo-text">TAREFAS</span>
+                <div class="logo-line"></div>
+            </div>
+            <div class="header-controls">
+                <span class="sync-status" id="syncStatus">●</span>
+                <button class="theme-toggle" id="themeToggle">Modo Escuro</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <button class="nav-btn active" data-view="home">Início</button>
+            <button class="nav-btn" data-view="tasks">Tarefas</button>
+            <button class="nav-btn" data-view="completed">Concluídas</button>
+            <button class="nav-btn" data-view="search">Pesquisar</button>
+        </div>
+    </nav>
+
+<div class="image-text-container">
+    <div class="row">
+        <span class="top-text">Consciência/Vitalidade</span>
+        <span class="top-text">Emoções/Intuição</span>
+        <span class="top-text">Ação/Conflito</span>
+        <span class="top-text">Comunicação/Mente</span>
+        <span class="top-text">Expansão/Sabedoria</span>
+        <span class="top-text">Amor/Beleza</span>
+        <span class="top-text">Limites/Estrutura</span>
+    </div>
+    <div class="row">
+        <span class="bottom-text">Dom.</span>
+        <span class="bottom-text">Seg.</span>
+        <span class="bottom-text">Ter.</span>
+        <span class="bottom-text">Qua.</span>
+        <span class="bottom-text">Qui.</span>
+        <span class="bottom-text">Sex.</span>
+        <span class="bottom-text">Shabbat</span>
+    </div>
+</div>
+
+
+    <main class="main container">
+        <section id="home" class="view active">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Bem-vindo à sua Lista de Tarefas</h1>
+                <p class="welcome-subtitle">Organize suas tarefas e aumente sua produtividade.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalTasks">0</span>
+                        <span class="stat-label">Tarefas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="completedTasks">0</span>
+                        <span class="stat-label">Concluídas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="pendingTasks">0</span>
+                        <span class="stat-label">Pendentes</span>
+                    </div>
+                </div>
+                <div class="quick-add">
+                    <input type="text" class="quick-input" id="quickTaskInput" placeholder="Adicionar tarefa rapidamente...">
+                    <button class="quick-btn" id="quickAddBtn">Adicionar</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="tasks" class="view">
+            <div class="task-header">
+                <h2 class="task-title">Suas Tarefas</h2>
+                <div class="task-controls">
+                    <select class="filter-select" id="priorityFilter">
+                        <option value="all">Todas as Prioridades</option>
+                        <option value="high">Alta</option>
+                        <option value="medium">Média</option>
+                        <option value="low">Baixa</option>
+                    </select>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="all">Todas as Categorias</option>
+                        <option value="work">Trabalho</option>
+                        <option value="personal">Pessoal</option>
+                        <option value="study">Estudos</option>
+                        <option value="health">Saúde</option>
+                        <option value="shopping">Compras</option>
+                        <option value="other">Outros</option>
+                    </select>
+                    <button class="add-task-btn" id="addTaskBtn">Nova Tarefa</button>
+                </div>
+            </div>
+            <div class="tasks-container" id="tasksContainer">
+            </div>
+        </section>
+
+        <section id="completed" class="view">
+            <div class="task-header">
+                <h2 class="task-title">Tarefas Concluídas</h2>
+                <button class="clear-completed-btn" id="clearCompletedBtn">Limpar Concluídas</button>
+            </div>
+            <div class="tasks-container" id="completedContainer">
+            </div>
+        </section>
+
+        <section id="search" class="view">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar tarefas...">
+                <div class="search-results" id="searchResults">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Nova Tarefa</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="task-input" id="taskTitle" placeholder="Título da tarefa...">
+                <textarea class="task-textarea" id="taskDescription" placeholder="Descrição (opcional)..."></textarea>
+                <div class="task-details">
+                    <div class="task-field">
+                        <label for="taskPriority">Prioridade:</label>
+                        <select class="task-select" id="taskPriority">
+                            <option value="low">Baixa</option>
+                            <option value="medium" selected>Média</option>
+                            <option value="high">Alta</option>
+                        </select>
+                    </div>
+                    <div class="task-field">
+                        <label for="taskCategory">Categoria:</label>
+                        <select class="task-select" id="taskCategory">
+                            <option value="personal">Pessoal</option>
+                            <option value="work">Trabalho</option>
+                            <option value="study">Estudos</option>
+                            <option value="health">Saúde</option>
+                            <option value="shopping">Compras</option>
+                            <option value="other">Outros</option>
+                        </select>
+                    </div>
+                    <div class="task-field">
+                        <label for="taskDueDate">Data de vencimento:</label>
+                        <input type="date" class="task-date" id="taskDueDate">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="deleteTaskBtn" style="display:none;">Excluir</button>
+                <button class="btn btn-primary" id="saveTaskBtn">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
